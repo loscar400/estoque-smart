@@ -1,0 +1,68 @@
+{% extends 'core/base.html' %}
+{% load tz %}
+
+{% block content %}
+<h2>Movimentações</h2>
+
+<a href="{% url 'movimento_create' %}">Nova Movimentação</a>
+
+{% for message in messages %}
+<p>{{ message }}</p>
+{% endfor %}
+
+<form method="get">
+    <fieldset>
+        <legend>Buscar movimentações</legend>
+
+        <label>Produto:</label>
+        <select name="produto">
+            <option value="">Todos</option>
+            {% for p in produtos %}
+            <option value="{{ p.id }}"
+                {% if filtros.produto == p.id|stringformat:"s" %}selected{% endif %}>
+                {{ p.nome }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label>Tipo:</label>
+        <select name="tipo">
+            <option value="">Todos</option>
+            <option value="E" {% if filtros.tipo == 'E' %}selected{% endif %}>Entrada</option>
+            <option value="S" {% if filtros.tipo == 'S' %}selected{% endif %}>Saída</option>
+        </select>
+
+        <label>Data início:</label>
+        <input type="date" name="data_inicio" value="{{ filtros.data_inicio }}">
+
+        <label>Data fim:</label>
+        <input type="date" name="data_fim" value="{{ filtros.data_fim }}">
+
+        <button type="submit">Buscar</button>
+        <a href="{% url 'movimento_list' %}">Limpar</a>
+    </fieldset>
+</form>
+
+<br>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Data</th>
+        <th>Produto</th>
+        <th>Tipo</th>
+        <th>Quantidade</th>
+    </tr>
+    {% for mov in movimentos %}
+    <tr>
+        <td>{{ mov.data|localtime|date:"d/m/Y H:i" }}</td>
+        <td>{{ mov.produto.nome }}</td>
+        <td>{{ mov.get_tipo_display }}</td>
+        <td>{{ mov.quantidade }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">Nenhuma movimentação registrada</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

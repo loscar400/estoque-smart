@@ -1,0 +1,35 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2>Dashboard</h2>
+
+<ul>
+    <li><strong>Total de produtos:</strong> {{ total_produtos }}</li>
+    <li><strong>Total em estoque:</strong> {{ total_estoque }}</li>
+    <li><strong>Total de movimentações:</strong> {{ total_movimentos }}</li>
+</ul>
+
+<h3>Últimas movimentações</h3>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Data</th>
+        <th>Produto</th>
+        <th>Tipo</th>
+        <th>Quantidade</th>
+    </tr>
+    {% for mov in ultimos_movimentos %}
+    <tr>
+        <td>{{ mov.data|date:"d/m/Y H:i" }}</td>
+        <td>{{ mov.produto.nome }}</td>
+        <td>{{ mov.get_tipo_display }}</td>
+        <td>{{ mov.quantidade }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">Nenhuma movimentação</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

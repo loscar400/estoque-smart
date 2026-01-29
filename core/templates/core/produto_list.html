@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2>Produtos</h2>
+<form method="get">
+    <input type="text" name="q" placeholder="Buscar produto..." value="{{ busca|default:'' }}">
+    <button type="submit">Buscar</button>
+</form>
+
+<br>
+<a href="{% url 'produto_create' %}">Novo Produto</a>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Quantidade</th>
+    </tr>
+    {% for produto in produtos %}
+    <tr>
+        <td>{{ produto.nome }}</td>
+        <td>{{ produto.descricao }}</td>
+        <td>{{ produto.quantidade }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="3">Nenhum produto cadastrado</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

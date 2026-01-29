@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Estoque Smart</title>
+</head>
+
+<body>
+    <nav>
+        <a href="{% url 'dashboard' %}">Dashboard</a> |
+        <a href="{% url 'produto_list' %}">Produtos</a> |
+        <a href="{% url 'movimento_list' %}">Movimentações</a> |
+        <a href="{% url 'logout' %}">Sair</a>
+    </nav>
+
+    {% block content %}{% endblock %}
+</body>
+
+</html>
