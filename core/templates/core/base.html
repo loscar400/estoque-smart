@@ -1,20 +1,30 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <title>Estoque Smart</title>
+    <link rel="stylesheet" href="{% static 'core/css/dark.css' %}">
 </head>
-
 <body>
-    <nav>
-        <a href="{% url 'dashboard' %}">Dashboard</a> |
-        <a href="{% url 'produto_list' %}">Produtos</a> |
-        <a href="{% url 'movimento_list' %}">Movimentações</a> |
-        <a href="{% url 'logout' %}">Sair</a>
-    </nav>
 
+<div class="navbar">
+    <a href="{% url 'dashboard' %}">Dashboard</a>
+
+    {% if perms.core.view_produto %}
+        <a href="{% url 'produto_list' %}">Produtos</a>
+    {% endif %}
+
+    {% if perms.core.view_movimento %}
+        <a href="{% url 'movimento_list' %}">Movimentações</a>
+    {% endif %}
+
+    <a href="{% url 'logout' %}" style="float:right;">Sair</a>
+</div>
+
+<div class="container">
     {% block content %}{% endblock %}
-</body>
+</div>
 
+</body>
 </html>
